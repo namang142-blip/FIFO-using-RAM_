@@ -49,7 +49,7 @@ empty = (wr_ptr == rd_ptr);
 * **Full:**
 
 ```verilog
-full = ((wr_ptr + 1) == rd_ptr);
+full = ((wr_ptr + 1)%4 == rd_ptr);
 ```
 
 > One slot is intentionally unused to avoid ambiguity between full and empty
