@@ -42,11 +42,12 @@ for(i = 0; i < 4; i = i + 1)begin
 @(posedge clk);
 rd_en = 1;
 @(posedge clk);
+  rd_en = 0;
+
 $display("READ: dout = %0d", dout);
 end
 
 
-rd_en = 0;
 
 #20 $finish;
 end
