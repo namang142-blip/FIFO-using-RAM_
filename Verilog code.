@@ -30,7 +30,7 @@ if(wr_ptr==rd_ptr)
 empty<=1;
 else
 empty<=0;
-if((wr_ptr+1)==rd_ptr)
+if((wr_ptr+1)%4==rd_ptr)
 full<=1;
 else
 full<=0;
