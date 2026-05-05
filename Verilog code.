@@ -7,7 +7,7 @@ output reg full,
 output reg empty);
 
 reg[3:0]mem[0:3];
-reg[1:0]wr_ptr,rd_ptr;
+reg[2:0]wr_ptr,rd_ptr;
 
 always@(posedge clk or posedge rst)begin
 if(rst)begin
