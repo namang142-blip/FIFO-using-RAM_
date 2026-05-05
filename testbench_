@@ -9,7 +9,7 @@ module tb_sync_fifo;
 
   integer i;
 
-  // DUT
+  
   sync_fifo uut (
     .clk(clk),
     .rst(rst),
@@ -21,7 +21,7 @@ module tb_sync_fifo;
     .empty(empty)
   );
 
-  // Clock
+  
   always #5 clk = ~clk;
 
   initial begin
@@ -32,9 +32,7 @@ module tb_sync_fifo;
 
     #10 rst = 0;
 
-    // -------------------
-    // WRITE LOOP
-    // -------------------
+    
     for (i = 0; i < 4; i = i + 1) begin
       @(posedge clk);
       wr_en = 1;
@@ -45,14 +43,12 @@ module tb_sync_fifo;
     @(posedge clk);
     wr_en = 0;
 
-    // -------------------
-    // READ LOOP
-    // -------------------
+    
     for (i = 0; i < 4; i = i + 1) begin
       @(posedge clk);
       rd_en = 1;
 
-      @(posedge clk); // wait for output
+      @(posedge clk); 
       $display("READ: data_out = %0d", data_out);
     end
 
