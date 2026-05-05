@@ -1,4 +1,4 @@
-`timescale 1ns/1ps
+
 
 module tb_sync_fifo;
 
@@ -11,7 +11,7 @@ module tb_sync_fifo;
 
   integer i;
 
-  // DUT
+  
   sync_fifo uut (
     .clk(clk),
     .rst(rst),
@@ -23,39 +23,33 @@ module tb_sync_fifo;
     .empty(empty)
   );
 
-  // Clock generation
+
   always #5 clk = ~clk;
 
   initial begin
-    // Initial values
+    
     clk = 0;
     rst = 1;
     wr_en = 0;
     rd_en = 0;
     data_in = 0;
 
-    // Reset
     #10 rst = 0;
 
-    // ======================
-    // WRITE LOOP
-    // ======================
     $display("---- WRITE PHASE ----");
 
     for (i = 0; i < 4; i = i + 1) begin
-      @(negedge clk);          // Apply input before posedge
+      @(negedge clk);          
       wr_en = 1;
       rd_en = 0;
-      data_in = i + 1;         // 1,2,3,4
+      data_in = i + 1;         
       $display("WRITE: data_in = %0d", data_in);
     end
 
     @(negedge clk);
     wr_en = 0;
 
-    // ======================
-    // READ LOOP
-    // ======================
+    
     $display("---- READ PHASE ----");
 
     for (i = 0; i < 4; i = i + 1) begin
@@ -63,20 +57,17 @@ module tb_sync_fifo;
       wr_en = 0;
       rd_en = 1;
 
-      @(posedge clk); // wait for output to update
+      @(posedge clk); 
       $display("READ: data_out = %0d", data_out);
     end
 
     @(negedge clk);
     rd_en = 0;
 
-    // ======================
-    // END
-    // ======================
+  
     #20 $finish;
   end
 
-  // Monitor (every clock)
   always @(posedge clk) begin
     $display("T=%0t | wr=%b rd=%b | din=%b | dout=%b | full=%b empty=%b",
              $time, wr_en, rd_en, data_in, data_out, full, empty);
